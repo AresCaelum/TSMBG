@@ -16,12 +16,14 @@ public class SelectFile : MonoBehaviour {
 
     public static string newPath;
     public int index = 0;
+    private Button myButton;
     private TextMeshProUGUI tmp;
     private Image icon;
     private string path;
     private FileType fileType = FileType.FT_File;
     private void Awake()
     {
+        myButton = GetComponent<Button>();
         tmp = GetComponentInChildren<TextMeshProUGUI>();
         icon = GetComponentInChildren<Image>();
     }
@@ -30,6 +32,7 @@ public class SelectFile : MonoBehaviour {
     {
         FileBrowser.ArrowUsed += UpdateButton;
         FileBrowser.DirectoryChanged += UpdateButton;
+        myButton.onClick.AddListener(Use);
     }
 
     private void OnDestroy()
@@ -43,26 +46,34 @@ public class SelectFile : MonoBehaviour {
         path = thePath;
         tmp.text = Path.GetFileName(path);
 
-        string extension = Path.GetExtension(path);
-        if (extension == null || extension.Equals(""))
+        myButton.interactable = !path.Equals("");
+
+        if (myButton.interactable)
         {
-            fileType = FileType.FT_Directory;
-            icon.color = Color.yellow;
-        } 
-        else
-        {
-            icon.color = Color.blue;
-            fileType = FileType.FT_File;
+            FileAttributes attr = File.GetAttributes(path);
+
+            //detect whether its a directory or file
+            if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+            {
+                fileType = FileType.FT_Directory;
+                icon.color = Color.yellow;
+            }
+            else
+            {
+                icon.color = Color.blue;
+                fileType = FileType.FT_File;
+            }
         }
     }
 
     public void Use()
     {
-        newPath = path;
+        newPath = Path.GetFullPath(path);
+        
         switch (fileType)
         {
             case FileType.FT_File:
-                newPath = "file:///" + path;
+                newPath = "file:///" + newPath;
                 UsedFile.Invoke();
                 break;
             case FileType.FT_Directory:

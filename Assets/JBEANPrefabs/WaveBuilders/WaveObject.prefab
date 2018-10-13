@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114628667732233528}
   - component: {fileID: 50730178200489368}
   - component: {fileID: 66731220444972502}
-  m_Layer: 0
+  m_Layer: 29
   m_Name: WaveObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7309f3dfa169b864fb57673c9876fe57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -16
+  minX: -20
 --- !u!114 &114974509172283808
 MonoBehaviour:
   m_ObjectHideFlags: 1

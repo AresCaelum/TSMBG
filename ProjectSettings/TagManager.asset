@@ -36,6 +36,7 @@ TagManager:
   - 
   - WaveObject
   - RythmnManager
+  - CameraConfiner
   m_SortingLayers:
   - name: Default
     uniqueID: 0

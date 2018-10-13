@@ -50,8 +50,14 @@ public class AudioHolder : MonoBehaviour {
             return;
         instance = this;
         DontDestroyOnLoad(this.gameObject);
-	} 
+        SelectFile.UsedFile += HandleLoad;
 
+    } 
+
+    void HandleLoad()
+    {
+        LoadAudio(SelectFile.newPath);
+    }
 
     private void OnDestroy()
     {

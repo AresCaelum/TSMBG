@@ -17,8 +17,6 @@ public class WaveBuilder : MonoBehaviour {
     public void CreateTile(float height)
     {
         int totalSpawn = Mathf.Max(1, Mathf.RoundToInt(height));
-        if(totalSpawn > 1)
-            Debug.Log("Spawning: " + totalSpawn);
         for(int i = 0; i < totalSpawn; ++i)
         {
             Block newBlock = Instantiate(BlockType, new Vector3(transform.position.x, transform.position.y + i, transform.position.z), Quaternion.identity);

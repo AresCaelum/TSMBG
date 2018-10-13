@@ -106,13 +106,12 @@ public class ObjectSpawner : MonoBehaviour
         _fSample = AudioSettings.outputSampleRate;
 
         yield return new WaitForSeconds(1.0f);
-        AudioHolder.instance.TestLoad();
 
         while (!AudioHolder.instance.IsFinishedLoading())
         {
             yield return null;
         }
-        yield return new WaitForSeconds(delay);
+        //yield return new WaitForSeconds(delay);
         Player.clip = AudioHolder.instance.GetAudioClip();
         Player.Play();
     }
