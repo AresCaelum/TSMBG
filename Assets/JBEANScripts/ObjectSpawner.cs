@@ -18,7 +18,7 @@ public class ObjectSpawner : MonoBehaviour
     public int BuffersToUse = 25;
     public int ChannelsToUse = 10;
 
-    private const int QSamples = 1024;
+    private const int QSamples = 512;
     private const float RefValue = 0.1f;
     private const float Threshold = 0.02f;
 

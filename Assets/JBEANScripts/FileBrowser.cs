@@ -16,6 +16,7 @@ public class FileBrowser : MonoBehaviour {
 
     private static string GetAndroidExternalFilesDir()
     {
+#if UNITY_ANDROID
         using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
         {
             using (AndroidJavaObject context = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
@@ -46,6 +47,8 @@ public class FileBrowser : MonoBehaviour {
                     return emulated.Call<string>("getAbsolutePath");
             }
         }
+#endif
+        return Application.persistentDataPath;
     }
 
     // Use this for initialization
