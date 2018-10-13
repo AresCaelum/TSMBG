@@ -88,8 +88,6 @@ public class ObjectSpawner : MonoBehaviour
     }
 
     ////////////////////////////
-
-
     // Use this for initialization
     IEnumerator Start()
     {
@@ -105,13 +103,8 @@ public class ObjectSpawner : MonoBehaviour
         _spectrum = new float[QSamples];
         _fSample = AudioSettings.outputSampleRate;
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1);
 
-        while (!AudioHolder.instance.IsFinishedLoading())
-        {
-            yield return null;
-        }
-        //yield return new WaitForSeconds(delay);
         Player.clip = AudioHolder.instance.GetAudioClip();
         Player.Play();
     }

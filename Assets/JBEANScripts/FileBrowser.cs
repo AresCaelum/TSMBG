@@ -4,7 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 using TMPro;
-public class FileBrowser : MonoBehaviour {
+public class FileBrowser : MonoBehaviour
+{
     public static event Action ArrowUsed = delegate { };
     public static event Action DirectoryChanged = delegate { };
     int currentIndex = 0;
@@ -17,42 +18,52 @@ public class FileBrowser : MonoBehaviour {
     private static string GetAndroidExternalFilesDir()
     {
 #if UNITY_ANDROID
-        using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+        try
         {
-            using (AndroidJavaObject context = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
-            {
-                // Get all available external file directories (emulated and sdCards)
-                AndroidJavaObject[] externalFilesDirectories = context.Call<AndroidJavaObject[]>("getExternalFilesDirs", null);
-                AndroidJavaObject emulated = null;
-                AndroidJavaObject sdCard = null;
 
-                for (int i = 0; i < externalFilesDirectories.Length; i++)
+            using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+            {
+                using (AndroidJavaObject context = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
                 {
-                    AndroidJavaObject directory = externalFilesDirectories[i];
-                    using (AndroidJavaClass environment = new AndroidJavaClass("android.os.Environment"))
+                    // Get all available external file directories (emulated and sdCards)
+                    AndroidJavaObject[] externalFilesDirectories = context.Call<AndroidJavaObject[]>("getExternalFilesDirs", null);
+                    AndroidJavaObject emulated = null;
+                    AndroidJavaObject sdCard = null;
+
+                    for (int i = 0; i < externalFilesDirectories.Length; i++)
                     {
-                        // Check which one is the emulated and which the sdCard.
-                        bool isRemovable = environment.CallStatic <bool>("isExternalStorageRemovable", directory);
-                        bool isEmulated = environment.CallStatic<bool>("isExternalStorageEmulated", directory);
-                        if (isEmulated)
-                            emulated = directory;
-                        else if (isRemovable && isEmulated == false)
-                            sdCard = directory;
+                        AndroidJavaObject directory = externalFilesDirectories[i];
+                        using (AndroidJavaClass environment = new AndroidJavaClass("android.os.Environment"))
+                        {
+                            // Check which one is the emulated and which the sdCard.
+                            bool isRemovable = environment.CallStatic<bool>("isExternalStorageRemovable", directory);
+                            bool isEmulated = environment.CallStatic<bool>("isExternalStorageEmulated", directory);
+                            if (isEmulated)
+                                emulated = directory;
+                            else if (isRemovable && isEmulated == false)
+                                sdCard = directory;
+                        }
                     }
+                    // Return the sdCard if available
+                    if (sdCard != null)
+                        return sdCard.Call<string>("getAbsolutePath");
+                    else
+                        return emulated.Call<string>("getAbsolutePath");
                 }
-                // Return the sdCard if available
-                if (sdCard != null)
-                    return sdCard.Call<string>("getAbsolutePath");
-                else
-                    return emulated.Call<string>("getAbsolutePath");
             }
+        }
+        catch (Exception)
+        {
+            //if exception is not accesible
+            return Application.persistentDataPath;
         }
 #endif
         return Application.persistentDataPath;
     }
 
     // Use this for initialization
-    IEnumerator Start () {
+    IEnumerator Start()
+    {
         if (instance == null)
         {
             instance = this;
@@ -118,13 +129,13 @@ public class FileBrowser : MonoBehaviour {
 
         foreach (string sz in files)
         {
-            if(HavePermissions(sz))
-            storedFiles.Add(Path.GetFullPath(sz));
+            if (HavePermissions(sz))
+                storedFiles.Add(Path.GetFullPath(sz));
         }
         files = Directory.GetFiles(SelectFile.newPath);
         foreach (string sz in files)
         {
-            if(HasSupportedExtension(sz))
+            if (HasSupportedExtension(sz))
                 storedFiles.Add(Path.GetFullPath(sz));
         }
 
@@ -160,7 +171,7 @@ public class FileBrowser : MonoBehaviour {
 
     public static string GetID(int index)
     {
-        if(index + instance.currentIndex < storedFiles.Count)
+        if (index + instance.currentIndex < storedFiles.Count)
         {
             //Debug.Log(storedFiles[index + currentIndex]);
             return storedFiles[index + instance.currentIndex];

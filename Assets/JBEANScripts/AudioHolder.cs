@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioHolder : MonoBehaviour {
+public class AudioHolder : MonoBehaviour
+{
 
     public static AudioHolder instance;
     [SerializeField]
@@ -22,7 +23,7 @@ public class AudioHolder : MonoBehaviour {
 
     public bool IsFinishedLoading()
     {
-        if(currentClip == null)
+        if (currentClip == null)
         {
             return false;
         }
@@ -31,7 +32,7 @@ public class AudioHolder : MonoBehaviour {
 
     public AudioDataLoadState GetStatus()
     {
-        if(currentClip == null)
+        if (currentClip == null)
         {
             return AudioDataLoadState.Failed;
         }
@@ -44,15 +45,16 @@ public class AudioHolder : MonoBehaviour {
         LoadAudio(testLoad);
     }
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         if (instance != null)
             return;
         instance = this;
         DontDestroyOnLoad(this.gameObject);
         SelectFile.UsedFile += HandleLoad;
 
-    } 
+    }
 
     void HandleLoad()
     {
@@ -64,4 +66,5 @@ public class AudioHolder : MonoBehaviour {
         if (instance == this)
             instance = null;
     }
+
 }
