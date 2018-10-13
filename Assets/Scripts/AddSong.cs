@@ -17,8 +17,6 @@ public class AddSong : MonoBehaviour {
         //butt = Instantiate(Button, Content.transform).GetComponent<Button>();
         Button.GetComponent<Button>().onClick.AddListener(LoadFileBrowser);
         SelectFile.UsedFile += AddSongToManager;
-        //sButton.transform.GetChild(0).GetComponent<Text>().text = "CHANGE";
-        //PlayerPrefs.DeleteAll();
         MusicManager.Start();
     }
 	
@@ -36,25 +34,22 @@ public class AddSong : MonoBehaviour {
    void AddSongToManager()
     {
         
-        
-        string Name = MusicManager.NumberofSongs().ToString() + "Song_name";
-        string Value1 = SelectFile.newPath;
+        string Name = MusicManager.NumberofSongs().ToString() + LoadMusicButton.SongProperties[0];
+        string songLocation = SelectFile.newPath;
 
-        string score = MusicManager.NumberofSongs().ToString() + "Song_score";
-        string Value2 = "0";
-        
+        string length = MusicManager.NumberofSongs().ToString() + LoadMusicButton.SongProperties[1];
+        string songLength = AudioHolder.instance.GetAudioClip().length.ToString();
 
-        string length = MusicManager.NumberofSongs().ToString() + "Song_length";
-        string Value3 = AudioHolder.instance.GetAudioClip().length.ToString();
+        string score = MusicManager.NumberofSongs().ToString() + LoadMusicButton.SongProperties[2];
+        string songScore = "0";
 
-        string Attempts = MusicManager.NumberofSongs().ToString() + "Attempts";
-        string Value4 = "0";
-
+        string Attempts = MusicManager.NumberofSongs().ToString() + LoadMusicButton.SongProperties[3];
+        string songAttempts = "0";
        
-        MusicManager.addSong(Name, Value1);
-        MusicManager.addSong(score, Value2);
-        MusicManager.addSong(length, Value3);
-        MusicManager.addSong(Attempts, Value4);
+        MusicManager.addSong(Name, songLocation);
+        MusicManager.addSong(score, songScore);
+        MusicManager.addSong(length, songLength);
+        MusicManager.addSong(Attempts, songAttempts);
         increment++;
         MusicManager.IncrementNumberofSongs();
 

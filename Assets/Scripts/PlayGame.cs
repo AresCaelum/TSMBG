@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class PlayGame : MonoBehaviour {
 
-    Coroutine myCoroutine;
     Button myButton;
 
     private void Awake()
@@ -17,35 +16,25 @@ public class PlayGame : MonoBehaviour {
     {
         myButton.interactable = false;
         SelectFile.UsedFile += DisablePlayButton;
+        AudioHolder.SongFinishedLoading += EnablePlayButton;
         LoadMusicButton.LoadMusic += DisablePlayButton;
     }
 
     private void OnDestroy()
     {
         SelectFile.UsedFile -= DisablePlayButton;
+        AudioHolder.SongFinishedLoading -= EnablePlayButton;
         LoadMusicButton.LoadMusic -= DisablePlayButton;
     }
 
     void DisablePlayButton()
     {
         myButton.interactable = false;
-
-        if (myCoroutine != null)
-            StopCoroutine(myCoroutine);
-
-        myCoroutine = StartCoroutine(WaitForAudioLoad());
     }
 
-    IEnumerator WaitForAudioLoad()
+    void EnablePlayButton()
     {
-        while(AudioHolder.instance.GetStatus() != AudioDataLoadState.Loaded)
-        {
-            Debug.Log(AudioHolder.instance.GetStatus());
-            yield return null;
-        }
-
         myButton.interactable = true;
-        myCoroutine = null;
     }
 
     public void StartGame()

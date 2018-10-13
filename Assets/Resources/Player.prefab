@@ -167,7 +167,7 @@ MonoBehaviour:
     m_Bits: 536871168
   whatIsPlayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   IsGrounded: 1
 --- !u!114 &114832978027380968
 MonoBehaviour:
@@ -196,6 +196,7 @@ MonoBehaviour:
   MaxJumpSpeed: 15
   AirSpeedLock: 0
   AirMovementLock: 0
+  UI_Controls: 1
 --- !u!212 &212052074969620910
 SpriteRenderer:
   m_ObjectHideFlags: 1
