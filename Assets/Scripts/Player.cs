@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
     bool AirSpeedLock = false;//Object's speed doesn't or does decrease when in the air.
     [SerializeField]
     bool AirMovementLock = false; //Object can or cannot control their direction in the air
+    [SerializeField]
+    bool UI_Controls = true;
 
     void Start()
     {
@@ -51,10 +53,55 @@ public class Player : MonoBehaviour
 
         if (GetComponent<Rigidbody2D>().velocity.y > MaxJumpSpeed)
             GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, MaxJumpSpeed);
+
+    }
+
+    public void MoveRight()
+    {
+        if (jumpingEntity.IsGrounded)
+        {
+            if (!AirSpeedLock)
+                walkingEntity.StopHorizontalMovement();
+
+            Direction = 1.0f;
+        }
+        else if (!AirMovementLock)
+        {
+            Direction = 1.0f;
+        }
+    }
+
+    public void MoveLeft()
+    {
+        if (jumpingEntity.IsGrounded)
+        {
+            if (!AirSpeedLock)
+                walkingEntity.StopHorizontalMovement();
+
+            Direction = -1.0f;
+        }
+        else if (!AirMovementLock)
+        {
+            Direction = -1.0f;
+        }
+    }
+
+    public void StopMoving()
+    {
+        Direction = 0.0f;
+        walkingEntity.StopHorizontalMovement();
+    }
+
+    public void Jump()
+    {
+        jumpingEntity.Jump(JumpForce);
     }
 
     void CheckInput()
     {
+        if (UI_Controls)
+            return;
+
         if (!AirSpeedLock)
             Direction = 0.0f;
 
@@ -76,7 +123,7 @@ public class Player : MonoBehaviour
 
             Direction = Input.GetAxisRaw("Horizontal");
         }
-        else if(!AirMovementLock)
+        else if (!AirMovementLock)
         {
             if (Input.GetAxisRaw("Horizontal") > 0.0f)
             {
@@ -87,7 +134,6 @@ public class Player : MonoBehaviour
                 Direction = -1.0f;
             }
         }
-
     }
 
 }
