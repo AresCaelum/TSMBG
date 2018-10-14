@@ -28,6 +28,9 @@ public class ObjectSpawner : MonoBehaviour
     private Queue<float> sampleBuffer = new Queue<float>();
     private float spectrum = 0.0f;
 
+
+    private bool SongFinished = false;
+
     void AnalyzeSound()
     {
         Player.GetOutputData(_samples, 0);
@@ -107,12 +110,31 @@ public class ObjectSpawner : MonoBehaviour
 
         Player.clip = AudioHolder.instance.GetAudioClip();
         Player.Play();
+
+        while (true)
+        {
+            yield return null;
+            if (Player.time >= Player.clip.length && !SongFinished)
+            {
+                StartCoroutine(StageComplete());
+                break;
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         AnalyzeSound();
+        
+    }
+
+    IEnumerator StageComplete()
+    {
+        SongFinished = true;
+        yield return new WaitForSeconds(5);
+
+        WindowManager.Instance.CreateCompleteWindow();
     }
 
     private void OnTriggerExit2D(Collider2D collision)

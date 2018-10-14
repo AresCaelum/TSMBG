@@ -15,14 +15,14 @@ public class LoadMusicButton : MonoBehaviour
     public GameObject Panel;
     public GameObject Panel3;
     // public Button StatButton;
-    public int Index;
+    public static int Index;
     public GameObject Upbutton;
     public GameObject Downbutton;
     public GameObject Button1;
     public GameObject Button2;
     public GameObject Button3;
     public GameObject Button4;
-    public static String[] SongProperties = { "Song_name", "Song_length", "Song_score", "Attempts" };
+    public static String[] SongProperties = { "Song_name", "Song_length", "Song_score", "Attempts", "Cleared" };
 
     public static int increment = 0;
 
@@ -92,7 +92,7 @@ public class LoadMusicButton : MonoBehaviour
     {
         if (ID < MusicManager.NumberofSongs())
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 5; i++)
             {
                 if (i == 0)
                 {
@@ -101,6 +101,7 @@ public class LoadMusicButton : MonoBehaviour
                 else
                 {
                     descriptionTexts[i].text = MusicManager.GetSong((ID).ToString() + SongProperties[i]);
+                    Debug.Log(ID);
                 }
             }
         }

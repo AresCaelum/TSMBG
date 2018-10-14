@@ -45,11 +45,15 @@ public class AddSong : MonoBehaviour {
 
         string Attempts = MusicManager.NumberofSongs().ToString() + LoadMusicButton.SongProperties[3];
         string songAttempts = "0";
-       
+
+        string Cleared = MusicManager.NumberofSongs().ToString() + LoadMusicButton.SongProperties[4];
+        string songCleared = "0";
+
         MusicManager.addSong(Name, songLocation);
         MusicManager.addSong(score, songScore);
         MusicManager.addSong(length, songLength);
         MusicManager.addSong(Attempts, songAttempts);
+        MusicManager.addSong(Cleared, songCleared);
         increment++;
         MusicManager.IncrementNumberofSongs();
 

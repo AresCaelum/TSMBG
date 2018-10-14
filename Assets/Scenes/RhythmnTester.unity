@@ -1832,6 +1832,7 @@ GameObject:
   - component: {fileID: 1870202123}
   - component: {fileID: 1870202122}
   - component: {fileID: 1870202125}
+  - component: {fileID: 1870202126}
   m_Layer: 5
   m_Name: PlayerControlsCanvas
   m_TagString: Untagged
@@ -1935,6 +1936,17 @@ MonoBehaviour:
   ResumeButton: {fileID: 2063487617}
   ReturnToSongMenu: {fileID: 1748628734}
   theMusic: {fileID: 838290623}
+--- !u!114 &1870202126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1870202120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 607f3eb722ce99b46a0ec63cf1ad253d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1886257401
 GameObject:
   m_ObjectHideFlags: 0
@@ -2428,7 +2440,7 @@ MonoBehaviour:
   MaxJumpSpeed: 15
   AirSpeedLock: 0
   AirMovementLock: 0
-  UI_Controls: 1
+  UI_Controls: 0
 --- !u!114 &2099138761
 MonoBehaviour:
   m_ObjectHideFlags: 0

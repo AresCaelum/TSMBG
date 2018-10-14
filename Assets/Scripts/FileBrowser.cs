@@ -57,8 +57,9 @@ public class FileBrowser : MonoBehaviour
             //if exception is not accesible
             return Application.persistentDataPath;
         }
-#endif
+#else
         return Application.persistentDataPath;
+#endif
     }
 
     // Use this for initialization
