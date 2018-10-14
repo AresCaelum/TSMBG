@@ -8,8 +8,11 @@ public class ObjectSpawner : MonoBehaviour
     public AudioSource Player;
     public WaveBuilder builder;
     public float delay = 3.0f;
-    public float stageSpeed = 4.0f;
+    public float stageSpeed = -4.0f;
+    public Rigidbody2D stageMover;
     public float scale = 100.0f;
+    public Player thePlayer;
+    public Projectile projectilePrefab;
 
     public float RmsValue;
     public float DbValue;
@@ -27,6 +30,20 @@ public class ObjectSpawner : MonoBehaviour
     private float _fSample;
     private Queue<float> sampleBuffer = new Queue<float>();
     private float spectrum = 0.0f;
+
+    int bps = 0;
+    int lastBPS = 0;
+    int currentBPS = 0;
+    int averageBPS;
+
+    public void IncrementBPS()
+    {
+        bps++;
+        if (thePlayer != null)
+        {
+            Instantiate(projectilePrefab, new Vector3(transform.position.x, Mathf.Max(thePlayer.transform.position.y + Random.Range(-5, 6), transform.position.y + 1), transform.position.z), Quaternion.identity);
+        }
+    }
 
     void AnalyzeSound()
     {
@@ -87,17 +104,50 @@ public class ObjectSpawner : MonoBehaviour
         return ratio / (float)ChannelsToUse * scale;
     }
 
+    IEnumerator HandleBPSData()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.25f);
+            lastBPS = currentBPS;
+            currentBPS = bps * 4;
+            if (currentBPS <= lastBPS)
+            {
+                stageMover.velocity = new Vector2(stageMover.velocity.x + 0.1f, 0f);
+                if (stageMover.velocity.x > stageSpeed - currentBPS)
+                {
+                    stageMover.velocity = new Vector2(stageSpeed - currentBPS, 0f);
+
+                }
+            }
+            else
+            {
+                stageMover.velocity = new Vector2(stageMover.velocity.x - 0.1f, 0f);
+                if (stageMover.velocity.x < stageSpeed - currentBPS)
+                {
+                    stageMover.velocity = new Vector2(stageSpeed - currentBPS, 0f);
+
+                }
+            }
+            //Debug.Log(averageBPS + " - BPS");
+            //stageMover.velocity = new Vector2(stageSpeed - averageBPS, 0f);
+            bps = 0;
+        }
+    }
+
     ////////////////////////////
     // Use this for initialization
     IEnumerator Start()
     {
+        StartCoroutine(HandleBPSData());
         if (builder != null)
         {
-            transform.localScale = new Vector3(builder.transform.localScale.x - 0.2f, builder.transform.localScale.y, 1f);
+            transform.localScale = new Vector3(builder.transform.localScale.x, builder.transform.localScale.y, 1f);
             transform.position = new Vector3(transform.position.x + (transform.localScale.x - 1f), transform.position.y, transform.position.z);
         }
         WaveBuilder newBuilder = Instantiate(builder, transform.position, Quaternion.identity);
-        newBuilder.SetSpeed(stageSpeed);
+        newBuilder.transform.SetParent(stageMover.transform);
+        //newBuilder.SetSpeed(stageSpeed);
         newBuilder.CreateTile(0.9f);
         _samples = new float[QSamples];
         _spectrum = new float[QSamples];
@@ -117,11 +167,12 @@ public class ObjectSpawner : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.GetComponent<WaveBuilder>() != null)
+        if (collision.GetComponentInChildren<WaveBuilder>() != null)
         {
-            WaveBuilder newBuilder = Instantiate(builder, transform.position, Quaternion.identity);
+            WaveBuilder newBuilder = Instantiate(builder, collision.transform.position + Vector3.right * transform.localScale.x, Quaternion.identity);
             newBuilder.CreateTile(spectrum * scale);
-            newBuilder.SetSpeed(stageSpeed);
+            newBuilder.transform.SetParent(stageMover.transform);
+            //newBuilder.SetSpeed(stageSpeed);
         }
     }
 }

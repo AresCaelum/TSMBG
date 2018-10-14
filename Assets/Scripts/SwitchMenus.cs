@@ -10,6 +10,8 @@ public class SwitchMenus : MonoBehaviour {
     public GameObject Play;
     public GameObject Exit;
     public GameObject Options;
+
+    public GameObject AdCanvas;
 	// Use this for initialization
 	void Start () {
         Play.GetComponent<Button>().onClick.AddListener(LoadMusicMenu);
@@ -25,4 +27,6 @@ public class SwitchMenus : MonoBehaviour {
         Canvis.SetActive(false);
         Canvis1.SetActive(true);
     }
+
+
 }

@@ -12,6 +12,28 @@ public class AudioHolder : MonoBehaviour
     private AudioClip currentClip;
     public static event Action SongFinishedLoading = delegate { };
 
+    private int Lives = 3;
+
+    public static bool CanPlay()
+    {
+        return instance.Lives > 0;
+    }
+
+    public static void ResetLives()
+    {
+        instance.Lives = 3;
+    }
+
+    public static int GetLives()
+    {
+        return instance.Lives;
+    }
+
+    public static void UseLife()
+    {
+        instance.Lives--;
+    }
+
     private Coroutine loadRoutine;
     public AudioClip GetAudioClip()
     {
@@ -72,6 +94,7 @@ public class AudioHolder : MonoBehaviour
     {
         if (instance != null)
             return;
+        AdManager.Initialize("2850450");
         instance = this;
         DontDestroyOnLoad(this.gameObject);
         SelectFile.UsedFile += HandleLoad;

@@ -21,8 +21,8 @@ GameObject:
   - component: {fileID: 4616810264474006}
   - component: {fileID: 114974509172283808}
   - component: {fileID: 114628667732233528}
-  - component: {fileID: 50730178200489368}
-  - component: {fileID: 66731220444972502}
+  - component: {fileID: 50381508215912718}
+  - component: {fileID: 66019588329672882}
   m_Layer: 29
   m_Name: WaveObject
   m_TagString: Untagged
@@ -43,7 +43,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50730178200489368
+--- !u!50 &50381508215912718
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
@@ -57,13 +57,13 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!66 &66731220444972502
+--- !u!66 &66019588329672882
 CompositeCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,4 +108,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BlockType: {fileID: 114847360523420678, guid: 95bb6d94bc7696f4bb905dee052a6826,
     type: 2}
-  myBody: {fileID: 0}
