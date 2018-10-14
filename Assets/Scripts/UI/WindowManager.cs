@@ -33,8 +33,7 @@ public class WindowManager: MonoBehaviour
     string CompleteWindowPath = "Window_StageComplete";
     string FailureWindowPath = "Window_StageFailed";
 
-    GameObject SpawnedBlackBackground = null;
-    GameObject SpawnedWindow = null;
+    bool Failure = false;
 
     void CreateBlackBackground()
     {
@@ -44,6 +43,9 @@ public class WindowManager: MonoBehaviour
 
     public void CreateCompleteWindow()
     {
+        if (Failure)
+            return;
+
         CreateBlackBackground();
         GameObject toSpawn = Resources.Load<GameObject>(CompleteWindowPath);
         WindowComplete window = GameObject.Instantiate(toSpawn, WindowCanvas).GetComponent<WindowComplete>();
@@ -56,6 +58,9 @@ public class WindowManager: MonoBehaviour
 
     public void CreateFailureWindow()
     {
+        Failure = true;
+        AudioSource audioPlayer = GameObject.Find("RythmnSpawner").GetComponent<AudioSource>();
+        audioPlayer.Stop();
         CreateBlackBackground();
         GameObject toSpawn = Resources.Load<GameObject>(FailureWindowPath);
         WindowComplete window = GameObject.Instantiate(toSpawn, WindowCanvas).GetComponent<WindowComplete>();
