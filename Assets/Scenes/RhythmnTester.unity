@@ -840,7 +840,11 @@ MonoBehaviour:
   builder: {fileID: 114974509172283808, guid: a2bb3ea4b6764e6419d577162df98573, type: 2}
   delay: 3
   stageSpeed: -4
+  stageMover: {fileID: 654246308}
   scale: 500
+  thePlayer: {fileID: 2099138760}
+  projectilePrefab: {fileID: 114080207001226210, guid: 19c1bd87cf6299744a212116a87ccdb1,
+    type: 2}
   RmsValue: 0
   DbValue: 0
   PitchValue: 0
@@ -1291,6 +1295,7 @@ GameObject:
   - component: {fileID: 1528553420}
   - component: {fileID: 1528553419}
   - component: {fileID: 1528553422}
+  - component: {fileID: 1528553424}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1506,6 +1511,7 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1748628734}
   m_CullTransparentMesh: 0
+
 --- !u!1 &1771336091
 GameObject:
   m_ObjectHideFlags: 0
@@ -2428,7 +2434,7 @@ MonoBehaviour:
   MaxJumpSpeed: 15
   AirSpeedLock: 0
   AirMovementLock: 0
-  UI_Controls: 1
+  UI_Controls: 0
 --- !u!114 &2099138761
 MonoBehaviour:
   m_ObjectHideFlags: 0

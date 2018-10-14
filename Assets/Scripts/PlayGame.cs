@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayGame : MonoBehaviour {
 
     Button myButton;
+    public AdControls adControl;
 
     private void Awake()
     {
@@ -40,7 +41,18 @@ public class PlayGame : MonoBehaviour {
 
     public void StartGame()
     {
-        SceneManager.LoadScene(1);
+        if (AudioHolder.CanPlay())
+        {
+            AudioHolder.UseLife();
+            SceneManager.LoadScene(1);
+        }
+        else
+        {
+            AdManager.clearAllRewardfunctions();
+            AdManager.SetZoneReward(UnityEngine.Advertisements.ShowResult.Finished, AudioHolder.ResetLives);
+            // Show Ad Menu...
+            adControl.ActivateAdScreen();
+        }
     }
 
 }
