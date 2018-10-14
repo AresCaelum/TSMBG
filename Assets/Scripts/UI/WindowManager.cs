@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WindowManager: MonoBehaviour
 {
+    public List<GameObject> ToHideOnFailure = new List<GameObject>();
+
     Transform windoCanvas;
     public Transform WindowCanvas
     {
@@ -33,12 +35,15 @@ public class WindowManager: MonoBehaviour
     string CompleteWindowPath = "Window_StageComplete";
     string FailureWindowPath = "Window_StageFailed";
 
+    GameObject BlackBackground;
+    GameObject Window;
+
     bool Failure = false;
 
     void CreateBlackBackground()
     {
         GameObject toSpawn = Resources.Load<GameObject>(BlackBackgroundPath);
-        GameObject.Instantiate(toSpawn, WindowCanvas);
+        BlackBackground = GameObject.Instantiate(toSpawn, WindowCanvas);
     }
 
     public void CreateCompleteWindow()
@@ -64,7 +69,7 @@ public class WindowManager: MonoBehaviour
         //audioPlayer.Stop();
         CreateBlackBackground();
         GameObject toSpawn = Resources.Load<GameObject>(FailureWindowPath);
-        GameObject.Instantiate(toSpawn, WindowCanvas).GetComponent<WindowComplete>();
+        Window = GameObject.Instantiate(toSpawn, WindowCanvas);
     }
 
     public void SaveScore()
@@ -87,6 +92,16 @@ public class WindowManager: MonoBehaviour
         string currentAttempts = MusicManager.GetSong(toSaveAttempts);
 
         MusicManager.addSong(toSaveAttempts, (int.Parse(currentAttempts) +1).ToString());
+    }
+
+    public void HideOnFilure()
+    {
+        Destroy(Window);
+        Destroy(BlackBackground);
+        foreach(GameObject obj in ToHideOnFailure)
+        {
+            obj.SetActive(false);
+        }
     }
 
     int GetScore()

@@ -18,4 +18,9 @@ public class WindowComplete : MonoBehaviour
         Time.timeScale = 1.0f;
         Pause.ReturnToMainMenu();
     }
+
+    public void OnHideClick()
+    {
+        WindowManager.Instance.HideOnFilure();
+    }
 }
