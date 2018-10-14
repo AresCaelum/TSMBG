@@ -1,10 +1,9 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-public class PlayGame : MonoBehaviour
-{
+public class PlayGame : MonoBehaviour {
 
     Button myButton;
     public AdControls adControl;
@@ -13,6 +12,7 @@ public class PlayGame : MonoBehaviour
     {
         myButton = GetComponent<Button>();
     }
+
 
     private void Start()
     {
