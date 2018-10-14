@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Menus.unity
-    guid: 2d0c37c43f5f1b848ac082f0d982acc2
+    path: Assets/FinalScenes/M1.unity
+    guid: fab700817397c144f87d08b04f350d81
   - enabled: 1
-    path: Assets/Scenes/RhythmnTester.unity
-    guid: 44221868e5533d54296ff24da66c9834
+    path: Assets/FinalScenes/RT2.unity
+    guid: 06e7691f9387ccf42b2ab51d54f8fa98
   m_configObjects: {}

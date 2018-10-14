@@ -59,8 +59,9 @@ public class WindowManager: MonoBehaviour
     public void CreateFailureWindow()
     {
         Failure = true;
-        AudioSource audioPlayer = GameObject.Find("RythmnSpawner").GetComponent<AudioSource>();
-        audioPlayer.Stop();
+        ObjectSpawner audioPlayer = GameObject.Find("RythmnSpawner").GetComponent<ObjectSpawner>();
+        audioPlayer.Fail();
+        //audioPlayer.Stop();
         CreateBlackBackground();
         GameObject toSpawn = Resources.Load<GameObject>(FailureWindowPath);
         WindowComplete window = GameObject.Instantiate(toSpawn, WindowCanvas).GetComponent<WindowComplete>();
@@ -71,6 +72,10 @@ public class WindowManager: MonoBehaviour
         string toSaveScore = LoadMusicButton.Index.ToString() + LoadMusicButton.SongProperties[2];
         string toSaveCleared = LoadMusicButton.Index.ToString() + LoadMusicButton.SongProperties[4];
         string currentCleared = MusicManager.GetSong(toSaveCleared);
+        if(currentCleared == null || currentCleared.Equals(""))
+        {
+            currentCleared = "0";
+        }
 
         MusicManager.addSong(toSaveCleared, (int.Parse(currentCleared) +1).ToString());
         MusicManager.addSong(toSaveScore, GetScore().ToString());

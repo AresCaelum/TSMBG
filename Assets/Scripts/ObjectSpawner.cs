@@ -31,6 +31,7 @@ public class ObjectSpawner : MonoBehaviour
     private Queue<float> sampleBuffer = new Queue<float>();
     private float spectrum = 0.0f;
     private bool SongFinished = false;
+    private Coroutine stageCompletion;
 
     int bps = 0;
     int lastBPS = 0;
@@ -160,15 +161,18 @@ public class ObjectSpawner : MonoBehaviour
         Player.Play();
         AudioVisualizerManager.audioSource = Player;
 
-        while (true)
+        while (!Player.isPlaying)
         {
             yield return null;
-            if (Player.time >= Player.clip.length && !SongFinished)
+            /*if (Player.time >= Player.clip.length && !SongFinished)
             {
+                SongFinished = true;
                 StartCoroutine(StageComplete());
                 break;
             }
+            */
         }
+        stageCompletion = StartCoroutine(StageComplete());
     }
 
     // Update is called once per frame
@@ -178,12 +182,23 @@ public class ObjectSpawner : MonoBehaviour
         
     }
 
+    public void Fail()
+    {
+        if(stageCompletion != null)
+        {
+            StopCoroutine(stageCompletion);
+            stageCompletion = null;
+        }
+    }
+
     IEnumerator StageComplete()
     {
-        SongFinished = true;
-        yield return new WaitForSeconds(5);
-
-        WindowManager.Instance.CreateCompleteWindow();
+        yield return new WaitForSeconds(Player.clip.length + 5);
+        if (stageCompletion != null)
+        {
+            stageCompletion = null;
+            WindowManager.Instance.CreateCompleteWindow();
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)

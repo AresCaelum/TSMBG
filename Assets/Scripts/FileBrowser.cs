@@ -89,10 +89,14 @@ public class FileBrowser : MonoBehaviour
     }
 
 
-    void CloseScreen()
+    public static void CloseScreen()
     {
-        storedFiles.Clear();
-        Destroy(FileBrowserCanvas);
+        if (instance != null)
+        {
+            storedFiles.Clear();
+            Destroy(instance.FileBrowserCanvas);
+            instance = null;
+        }
     }
     private void OnDestroy()
     {

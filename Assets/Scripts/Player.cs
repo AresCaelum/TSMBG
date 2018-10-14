@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityStandardAssets.CrossPlatformInput;
 
 [RequireComponent(typeof(WalkingEntity))]
 [RequireComponent(typeof(JumpingEntity))]
@@ -124,14 +125,11 @@ public class Player : MonoBehaviour
 
     void CheckInput()
     {
-        if (UI_Controls)
-            return;
-
         if (!AirSpeedLock)
             Direction = 0.0f;
 
         //Facing direction.
-        if (Input.GetAxisRaw("Horizontal") != 0.0f || MovingDirection == 0)
+        if (CrossPlatformInputManager.GetAxisRaw("Horizontal") != 0.0f || MovingDirection == 0)
             MovingDirection = Direction > 0.0f ? 1 : -1;
 
         //Jumping behaviour
@@ -146,15 +144,15 @@ public class Player : MonoBehaviour
             if (!AirSpeedLock)
                 walkingEntity.StopHorizontalMovement();
 
-            Direction = Input.GetAxisRaw("Horizontal");
+            Direction = CrossPlatformInputManager.GetAxisRaw("Horizontal");
         }
         else if (!AirMovementLock)
         {
-            if (Input.GetAxisRaw("Horizontal") > 0.0f)
+            if (CrossPlatformInputManager.GetAxisRaw("Horizontal") > 0.0f)
             {
                 Direction = 1.0f;
             }
-            else if (Input.GetAxisRaw("Horizontal") < 0.0f)
+            else if (CrossPlatformInputManager.GetAxisRaw("Horizontal") < 0.0f)
             {
                 Direction = -1.0f;
             }

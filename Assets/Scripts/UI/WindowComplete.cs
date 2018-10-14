@@ -16,6 +16,6 @@ public class WindowComplete : MonoBehaviour
     public void OnReturnClick()
     {
         Time.timeScale = 1.0f;
-        PauseMenu.ReturnToMainMenu();
+        Pause.ReturnToMainMenu();
     }
 }
