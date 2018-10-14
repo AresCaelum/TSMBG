@@ -32,8 +32,7 @@ public class Pause : MonoBehaviour
 
     private void OnDestroy()
     {
-        Destroy(this);
-
+        Time.timeScale = 1.0f;
     }
     // Update is called once per frame
     void Update()
@@ -73,7 +72,6 @@ public class Pause : MonoBehaviour
         ResumeButton.SetActive(false);
         ReturnToSongMenu.SetActive(false);
     }
-
 
 
     static public void ReturnToMainMenu()
