@@ -9,7 +9,7 @@ public static class MusicManager
     static public void Start()
     {
         Numberofsongs = PlayerPrefs.GetInt("Numberofsongs", 0);
-        Debug.Log(PlayerPrefs.GetString("Numberofsongs"));
+        //Debug.Log(PlayerPrefs.GetString("Numberofsongs"));
     }
 
     // Update is called once per frame
@@ -45,7 +45,7 @@ public static class MusicManager
 
     static public void Exit()
     {
-        Debug.Log(PlayerPrefs.GetString("Numberofsongs"));
+        //Debug.Log(PlayerPrefs.GetString("Numberofsongs"));
         PlayerPrefs.SetInt("Numberofsongs", Numberofsongs);
         PlayerPrefs.Save();
     }

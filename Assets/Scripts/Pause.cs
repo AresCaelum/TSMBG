@@ -17,7 +17,7 @@ public class Pause : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1;
-        Debug.Log("I FELL IN HERE");
+        //Debug.Log("I FELL IN HERE");
         // PauseButton.SetActive(true);
         ResumeButton.SetActive(false);
         ReturnToSongMenu.SetActive(false);
