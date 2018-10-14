@@ -38,7 +38,7 @@ public class WindowManager: MonoBehaviour
     void CreateBlackBackground()
     {
         GameObject toSpawn = Resources.Load<GameObject>(BlackBackgroundPath);
-        GameObject blackBackground = GameObject.Instantiate(toSpawn, WindowCanvas);
+        GameObject.Instantiate(toSpawn, WindowCanvas);
     }
 
     public void CreateCompleteWindow()
@@ -64,7 +64,7 @@ public class WindowManager: MonoBehaviour
         //audioPlayer.Stop();
         CreateBlackBackground();
         GameObject toSpawn = Resources.Load<GameObject>(FailureWindowPath);
-        WindowComplete window = GameObject.Instantiate(toSpawn, WindowCanvas).GetComponent<WindowComplete>();
+        GameObject.Instantiate(toSpawn, WindowCanvas).GetComponent<WindowComplete>();
     }
 
     public void SaveScore()

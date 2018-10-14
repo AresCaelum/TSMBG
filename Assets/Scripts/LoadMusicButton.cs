@@ -101,7 +101,7 @@ public class LoadMusicButton : MonoBehaviour
                 else
                 {
                     descriptionTexts[i].text = MusicManager.GetSong((ID).ToString() + SongProperties[i]);
-                    Debug.Log(ID);
+                    //Debug.Log(ID);
                 }
             }
         }

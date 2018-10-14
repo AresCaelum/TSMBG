@@ -7,7 +7,7 @@ public class AudioHolder : MonoBehaviour
 
     public static AudioHolder instance;
     public static String lastPlayed = "LastPlayed";
-    private String audioLocation = "";
+    //private String audioLocation = "";
     [SerializeField]
     private AudioClip currentClip;
     public static event Action SongFinishedLoading = delegate { };
@@ -53,7 +53,7 @@ public class AudioHolder : MonoBehaviour
         currentClip = clipAddress.GetAudioClip(false, false);
         if (currentClip != null)
         {
-            audioLocation = location;
+            // audioLocation = location;
             PlayerPrefs.SetString(lastPlayed, location);
             PlayerPrefs.Save();
             loadRoutine = StartCoroutine(MusicStatus());
