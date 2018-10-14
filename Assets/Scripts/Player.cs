@@ -25,12 +25,18 @@ public class Player : MonoBehaviour
     [SerializeField]
     bool UI_Controls = true;
 
+    [SerializeField]
+    int MaxHealth = 10;
+    int Health;
+
     void Start()
     {
         walkingEntity = GetComponent<WalkingEntity>();
         jumpingEntity = GetComponent<JumpingEntity>();
         GetComponent<Rigidbody2D>().gravityScale = 3.5f;
+        Health = MaxHealth;
     }
+
     // Update is called once per frame
     void Update()
     {
@@ -53,7 +59,6 @@ public class Player : MonoBehaviour
 
         if (GetComponent<Rigidbody2D>().velocity.y > MaxJumpSpeed)
             GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, MaxJumpSpeed);
-
     }
 
     public void MoveRight()
@@ -134,5 +139,23 @@ public class Player : MonoBehaviour
                 Direction = -1.0f;
             }
         }
+    }
+
+    public void TakeOneHealth()
+    {
+        Health--;
+        if(Health <= 0)
+        {
+            Death();
+        }
+    }
+
+    public void Death()
+    {
+        AudioSource audioPlayer = GameObject.Find("RythmnSpawner").GetComponent<AudioSource>();
+        audioPlayer.Stop();
+        WindowManager.Instance.SaveAttempts();
+        WindowManager.Instance.CreateFailureWindow();
+        Destroy(this);
     }
 }

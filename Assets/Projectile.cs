@@ -22,6 +22,7 @@ public class Projectile : MonoBehaviour {
         if(player != null)
         {
             player.gameObject.AddComponent<Stun>();
+            player.TakeOneHealth();
             Destroy(this.gameObject);
         }
     }

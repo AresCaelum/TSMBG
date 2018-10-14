@@ -17,7 +17,7 @@ public class Stun : MonoBehaviour {
 
     private void OnDestroy()
     {
-        if(player.GetComponents<Stun>().Length <= 1)
+        if(GetComponent<Player>() != null && player.GetComponents<Stun>().Length <= 1)
             player.enabled = true;
     }
 }
