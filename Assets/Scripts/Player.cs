@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(WalkingEntity))]
 [RequireComponent(typeof(JumpingEntity))]
@@ -25,12 +26,37 @@ public class Player : MonoBehaviour
     [SerializeField]
     bool UI_Controls = true;
 
-    void Start()
+    [SerializeField]
+    public static int MaxHealth = 10;
+    public static int Health;
+    float HealthRefreshRate = 2.5f;
+    [SerializeField]
+    Image HealthBar = null;
+
+    IEnumerator Start()
     {
         walkingEntity = GetComponent<WalkingEntity>();
         jumpingEntity = GetComponent<JumpingEntity>();
         GetComponent<Rigidbody2D>().gravityScale = 3.5f;
+        Health = MaxHealth;
+
+        while (true)
+        {
+            if (Health < MaxHealth)
+            {
+                yield return new WaitForSeconds(HealthRefreshRate);
+                Health++;
+                if (Health > MaxHealth)
+                    Health = MaxHealth;
+                HealthBar.fillAmount = (float)Health / (float)MaxHealth;
+            }
+            else
+            {
+                yield return null;
+            }
+        }
     }
+
     // Update is called once per frame
     void Update()
     {
@@ -53,7 +79,6 @@ public class Player : MonoBehaviour
 
         if (GetComponent<Rigidbody2D>().velocity.y > MaxJumpSpeed)
             GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, MaxJumpSpeed);
-
     }
 
     public void MoveRight()
@@ -134,5 +159,24 @@ public class Player : MonoBehaviour
                 Direction = -1.0f;
             }
         }
+    }
+
+    public void TakeOneHealth()
+    {
+        Health--;
+        HealthBar.fillAmount = (float)Health / (float)MaxHealth;
+        if (Health <= 0)
+        {
+            Death();
+        }
+    }
+
+    public void Death()
+    {
+        AudioSource audioPlayer = GameObject.Find("RythmnSpawner").GetComponent<AudioSource>();
+        audioPlayer.Stop();
+        WindowManager.Instance.SaveAttempts();
+        WindowManager.Instance.CreateFailureWindow();
+        Destroy(this);
     }
 }

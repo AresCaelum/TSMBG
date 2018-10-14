@@ -71,10 +71,18 @@ public class WindowManager: MonoBehaviour
         MusicManager.addSong(toSaveScore, GetScore().ToString());
     }
 
+    public void SaveAttempts()
+    {
+        string toSaveAttempts = LoadMusicButton.Index.ToString() + LoadMusicButton.SongProperties[3];
+        string currentAttempts = MusicManager.GetSong(toSaveAttempts);
+
+        MusicManager.addSong(toSaveAttempts, (int.Parse(currentAttempts) +1).ToString());
+    }
+
     int GetScore()
     {
         AudioSource player = GameObject.Find("RythmnSpawner").GetComponent<AudioSource>();
-        int score = (int)player.clip.length;
+        int score = (int)(player.clip.length * ((float)Player.Health / (float)Player.MaxHealth)) * 100;
 
         return score;
     }
