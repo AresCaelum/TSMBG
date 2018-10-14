@@ -171,7 +171,7 @@ public class FileBrowser : MonoBehaviour
     {
         String extension = Path.GetExtension(path).ToLower();
 
-        return extension.Contains("mp3") || extension.Contains("wav") || extension.Contains("ogg");
+        return extension.Contains("mp3") || extension.Contains("wav") || extension.Contains("ogg") || extension.Contains("aif") || extension.Contains("mod") || extension.Contains("it") || extension.Contains("s3m") || extension.Contains("xm");
     }
 
     public static string GetID(int index)
