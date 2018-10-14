@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(WalkingEntity))]
 [RequireComponent(typeof(JumpingEntity))]
@@ -26,15 +27,34 @@ public class Player : MonoBehaviour
     bool UI_Controls = true;
 
     [SerializeField]
-    int MaxHealth = 10;
-    int Health;
+    public static int MaxHealth = 10;
+    public static int Health;
+    float HealthRefreshRate = 2.5f;
+    [SerializeField]
+    Image HealthBar = null;
 
-    void Start()
+    IEnumerator Start()
     {
         walkingEntity = GetComponent<WalkingEntity>();
         jumpingEntity = GetComponent<JumpingEntity>();
         GetComponent<Rigidbody2D>().gravityScale = 3.5f;
         Health = MaxHealth;
+
+        while (true)
+        {
+            if (Health < MaxHealth)
+            {
+                yield return new WaitForSeconds(HealthRefreshRate);
+                Health++;
+                if (Health > MaxHealth)
+                    Health = MaxHealth;
+                HealthBar.fillAmount = (float)Health / (float)MaxHealth;
+            }
+            else
+            {
+                yield return null;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -144,7 +164,8 @@ public class Player : MonoBehaviour
     public void TakeOneHealth()
     {
         Health--;
-        if(Health <= 0)
+        HealthBar.fillAmount = (float)Health / (float)MaxHealth;
+        if (Health <= 0)
         {
             Death();
         }

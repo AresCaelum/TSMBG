@@ -82,7 +82,7 @@ public class WindowManager: MonoBehaviour
     int GetScore()
     {
         AudioSource player = GameObject.Find("RythmnSpawner").GetComponent<AudioSource>();
-        int score = (int)player.clip.length;
+        int score = (int)(player.clip.length * ((float)Player.Health / (float)Player.MaxHealth)) * 100;
 
         return score;
     }

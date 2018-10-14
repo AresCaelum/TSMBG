@@ -158,6 +158,7 @@ public class ObjectSpawner : MonoBehaviour
 
         Player.clip = AudioHolder.instance.GetAudioClip();
         Player.Play();
+        AudioVisualizerManager.audioSource = Player;
 
         while (true)
         {
