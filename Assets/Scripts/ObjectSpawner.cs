@@ -30,7 +30,7 @@ public class ObjectSpawner : MonoBehaviour
     private float _fSample;
     private Queue<float> sampleBuffer = new Queue<float>();
     private float spectrum = 0.0f;
-    private bool SongFinished = false;
+    //private bool SongFinished = false;
     private Coroutine stageCompletion;
 
     int bps = 0;

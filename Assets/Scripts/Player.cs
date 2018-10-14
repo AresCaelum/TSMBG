@@ -24,8 +24,8 @@ public class Player : MonoBehaviour
     bool AirSpeedLock = false;//Object's speed doesn't or does decrease when in the air.
     [SerializeField]
     bool AirMovementLock = false; //Object can or cannot control their direction in the air
-    [SerializeField]
-    bool UI_Controls = true;
+    //[SerializeField]
+    //bool UI_Controls = true;
 
     [SerializeField]
     public static int MaxHealth = 10;
