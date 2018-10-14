@@ -2440,7 +2440,7 @@ MonoBehaviour:
   MaxJumpSpeed: 15
   AirSpeedLock: 0
   AirMovementLock: 0
-  UI_Controls: 0
+  UI_Controls: 1
 --- !u!114 &2099138761
 MonoBehaviour:
   m_ObjectHideFlags: 0

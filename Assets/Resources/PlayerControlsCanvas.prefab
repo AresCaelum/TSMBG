@@ -145,6 +145,7 @@ GameObject:
   - component: {fileID: 223857203232274474}
   - component: {fileID: 114372664272678896}
   - component: {fileID: 114729527236030014}
+  - component: {fileID: 114361975191638180}
   m_Layer: 5
   m_Name: PlayerControlsCanvas
   m_TagString: Untagged
@@ -399,6 +400,17 @@ MonoBehaviour:
   AirSpeedLock: 0
   AirMovementLock: 0
   UI_Controls: 1
+--- !u!114 &114361975191638180
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1978254585819274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 607f3eb722ce99b46a0ec63cf1ad253d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114372664272678896
 MonoBehaviour:
   m_ObjectHideFlags: 1

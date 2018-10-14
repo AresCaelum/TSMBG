@@ -31,6 +31,7 @@ public class WindowManager: MonoBehaviour
 
     string BlackBackgroundPath = "Window_BlackBackground";
     string CompleteWindowPath = "Window_StageComplete";
+    string FailureWindowPath = "Window_StageFailed";
 
     GameObject SpawnedBlackBackground = null;
     GameObject SpawnedWindow = null;
@@ -51,6 +52,13 @@ public class WindowManager: MonoBehaviour
             window.SetScore(GetScore());
             SaveScore();
         }
+    }
+
+    public void CreateFailureWindow()
+    {
+        CreateBlackBackground();
+        GameObject toSpawn = Resources.Load<GameObject>(FailureWindowPath);
+        WindowComplete window = GameObject.Instantiate(toSpawn, WindowCanvas).GetComponent<WindowComplete>();
     }
 
     public void SaveScore()
