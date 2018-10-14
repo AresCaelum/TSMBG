@@ -12,6 +12,7 @@ public class PlayGame : MonoBehaviour {
         myButton = GetComponent<Button>();
     }
 
+
     private void Start()
     {
         myButton.interactable = false;
