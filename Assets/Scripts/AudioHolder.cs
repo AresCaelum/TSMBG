@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-
+using System.IO;
 public class AudioHolder : MonoBehaviour
 {
 
     public static AudioHolder instance;
     public static String lastPlayed = "LastPlayed";
+    public static String songName = "";
     //private String audioLocation = "";
     [SerializeField]
     private AudioClip currentClip;
@@ -17,6 +18,12 @@ public class AudioHolder : MonoBehaviour
     public static bool CanPlay()
     {
         return instance.Lives > 0;
+    }
+
+
+    public void SetAudioClip(AudioClip clipToPlay)
+    {
+        currentClip = clipToPlay;
     }
 
     public static void ResetLives()
@@ -50,6 +57,7 @@ public class AudioHolder : MonoBehaviour
             StopCoroutine(loadRoutine);
 
         WWW clipAddress = new WWW(location);
+        songName = Path.GetFileNameWithoutExtension(location);
         currentClip = clipAddress.GetAudioClip(false, false);
         if (currentClip != null)
         {
@@ -94,7 +102,7 @@ public class AudioHolder : MonoBehaviour
     {
         if (instance != null)
             return;
-        AdManager.Initialize("2850450");
+        AdManager.Initialize("2850450", false);
         instance = this;
         DontDestroyOnLoad(this.gameObject);
         SelectFile.UsedFile += HandleLoad;
@@ -112,4 +120,8 @@ public class AudioHolder : MonoBehaviour
             instance = null;
     }
 
+    internal int GetSongName()
+    {
+        return songName.ToLowerInvariant().GetHashCode();
+    }
 }

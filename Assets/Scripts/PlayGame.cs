@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayGame : MonoBehaviour {
 
     Button myButton;
+    public Slider difficultySlide;
     public AdControls adControl;
 
     private void Awake()
@@ -44,6 +45,8 @@ public class PlayGame : MonoBehaviour {
         if (AudioHolder.CanPlay())
         {
             AudioHolder.UseLife();
+            WindowManager.SaveStats = true;
+            ObjectSpawner.ProjectileSpawnRate = 3 - Mathf.RoundToInt(difficultySlide.value);
             SceneManager.LoadScene(1);
         }
         else

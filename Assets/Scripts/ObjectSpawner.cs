@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectSpawner : MonoBehaviour
 {
-
+    public static int ProjectileSpawnRate = 3;
     public AudioSource Player;
     public WaveBuilder builder;
     public float delay = 3.0f;
@@ -37,13 +37,20 @@ public class ObjectSpawner : MonoBehaviour
     int lastBPS = 0;
     int currentBPS = 0;
     int averageBPS;
+    int totalBeats = 0;
+    public float proceduralScale = 0.1f;
+    public float proceduralOffset = 0.0f;
+    bool stageCompleted = false;
 
     public void IncrementBPS()
     {
         bps++;
-        if (thePlayer != null)
+        totalBeats++;
+        if (thePlayer != null && totalBeats % ProjectileSpawnRate == 0)
         {
-            Instantiate(projectilePrefab, new Vector3(transform.position.x, Mathf.Max(thePlayer.transform.position.y + Random.Range(-5, 6), transform.position.y + 1), transform.position.z), Quaternion.identity);
+            float rate = Mathf.PerlinNoise((Mathf.RoundToInt(Player.time) * proceduralScale) + proceduralOffset, proceduralOffset);
+            int Position = (Mathf.RoundToInt((rate - 0.5f) * (6 - (2 - ProjectileSpawnRate+1))));
+            Instantiate(projectilePrefab, new Vector3(transform.position.x, Mathf.Max(thePlayer.transform.position.y + Position, transform.position.y + 1), transform.position.z), Quaternion.identity);
         }
     }
 
@@ -141,25 +148,30 @@ public class ObjectSpawner : MonoBehaviour
     // Use this for initialization
     IEnumerator Start()
     {
+        //Random.InitState(AudioHolder.instance.GetSongName());
+        proceduralOffset = (Mathf.Abs(AudioHolder.instance.GetSongName()) % 2048) * proceduralScale; 
+        Debug.Log("Seed: " + proceduralOffset);
+
         StartCoroutine(HandleBPSData());
         if (builder != null)
         {
             transform.localScale = new Vector3(builder.transform.localScale.x, builder.transform.localScale.y, 1f);
             transform.position = new Vector3(transform.position.x + (transform.localScale.x - 1f), transform.position.y, transform.position.z);
         }
-        WaveBuilder newBuilder = Instantiate(builder, transform.position, Quaternion.identity);
+
+        /*WaveBuilder newBuilder = Instantiate(builder, transform.position, Quaternion.identity);
         newBuilder.transform.SetParent(stageMover.transform);
         //newBuilder.SetSpeed(stageSpeed);
-        newBuilder.CreateTile(0.9f);
+        newBuilder.CreateTile(0.9f);*/
         _samples = new float[QSamples];
         _spectrum = new float[QSamples];
         _fSample = AudioSettings.outputSampleRate;
 
-        yield return new WaitForSeconds(1);
 
         Player.clip = AudioHolder.instance.GetAudioClip();
         Player.Play();
         AudioVisualizerManager.audioSource = Player;
+        SpawnTile(transform.position);
 
         while (!Player.isPlaying)
         {
@@ -172,6 +184,8 @@ public class ObjectSpawner : MonoBehaviour
             }
             */
         }
+
+
         stageCompletion = StartCoroutine(StageComplete());
     }
 
@@ -188,6 +202,7 @@ public class ObjectSpawner : MonoBehaviour
         {
             StopCoroutine(stageCompletion);
             stageCompletion = null;
+            stageCompleted = true;
         }
     }
 
@@ -197,18 +212,38 @@ public class ObjectSpawner : MonoBehaviour
         if (stageCompletion != null)
         {
             stageCompletion = null;
+            stageCompleted = true;
             WindowManager.Instance.CreateCompleteWindow();
         }
     }
 
+    private void SpawnTile(Vector3 position)
+    {
+        WaveBuilder newBuilder = Instantiate(builder, position, Quaternion.identity);
+        float rate = Mathf.PerlinNoise((Mathf.RoundToInt(Player.time) * proceduralScale) + proceduralOffset, proceduralOffset);
+        newBuilder.CreateTile(rate * scale);
+        newBuilder.GetComponent<SpriteRenderer>().color = Color.white * rate;
+        Debug.Log(rate);
+
+        newBuilder.transform.SetParent(stageMover.transform);
+    }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.GetComponentInChildren<WaveBuilder>() != null)
         {
-            WaveBuilder newBuilder = Instantiate(builder, collision.transform.position + Vector3.right * transform.localScale.x, Quaternion.identity);
-            newBuilder.CreateTile(spectrum * scale);
+            if (stageCompleted != true)
+            {
+                SpawnTile(collision.transform.position + Vector3.right * transform.localScale.x);
+            }
+            /*
+            WaveBuilder newBuilder = Instantiate(builder, , Quaternion.identity);
+            float rate = Mathf.PerlinNoise((Mathf.RoundToInt(Player.time) * proceduralScale) + ((AudioHolder.instance.GetSongName() % 500) * proceduralScale), 3.0f);
+            newBuilder.CreateTile(rate * scale);
+            newBuilder.GetComponent<SpriteRenderer>().color = Color.white * rate;
+            Debug.Log(rate);
+
             newBuilder.transform.SetParent(stageMover.transform);
-            //newBuilder.SetSpeed(stageSpeed);
+            */
         }
     }
 }

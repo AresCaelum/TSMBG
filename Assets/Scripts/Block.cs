@@ -1,29 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
-public class Block : MonoBehaviour {
-    BoxCollider2D col;
+[RequireComponent(typeof(SpriteRenderer))]
+public class Block : MonoBehaviour
+{
     SpriteRenderer myRenderer;
+    BoxCollider2D col;
     private void Awake()
     {
-        col = GetComponent<BoxCollider2D>();
         myRenderer = GetComponent<SpriteRenderer>();
-        if(col != null)
-        {
-            if(col.usedByComposite == false)
-            {
-                col.usedByComposite = true;
-            }
-        }
+        col = GetComponent<BoxCollider2D>();
     }
 
     private void Start()
     {
-        myRenderer.color = new Color(Random.Range(0.9f, 1f) * Random.Range(0, 2),Random.Range(0.9f, 1f) *Random.Range(0, 2),Random.Range(0.9f, 1f) *Random.Range(0, 2));
+        myRenderer.color = new Color(Random.Range(0.9f, 1f) * Random.Range(0, 2), Random.Range(0.9f, 1f) * Random.Range(0, 2), Random.Range(0.9f, 1f) * Random.Range(0, 2));
 
         if (myRenderer.color.Equals(Color.black))
             myRenderer.color = Color.white;
+    }
 
+    public void SetHeight(int topHeight)
+    {
+        col.size = new Vector2(1f, topHeight);
+        myRenderer.size = new Vector2(1f, topHeight);
+        transform.position = new Vector3(transform.position.x, -10 + (topHeight - 1) * 0.5f, transform.position.z);
     }
 }

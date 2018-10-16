@@ -5,7 +5,7 @@ using UnityEngine;
 public class WindowManager: MonoBehaviour
 {
     public List<GameObject> ToHideOnFailure = new List<GameObject>();
-
+    public static bool SaveStats = true;
     Transform windoCanvas;
     public Transform WindowCanvas
     {
@@ -74,24 +74,30 @@ public class WindowManager: MonoBehaviour
 
     public void SaveScore()
     {
-        string toSaveScore = LoadMusicButton.Index.ToString() + LoadMusicButton.SongProperties[2];
-        string toSaveCleared = LoadMusicButton.Index.ToString() + LoadMusicButton.SongProperties[4];
-        string currentCleared = MusicManager.GetSong(toSaveCleared);
-        if(currentCleared == null || currentCleared.Equals(""))
+        if (SaveStats)
         {
-            currentCleared = "0";
-        }
+            string toSaveScore = LoadMusicButton.Index.ToString() + LoadMusicButton.SongProperties[2];
+            string toSaveCleared = LoadMusicButton.Index.ToString() + LoadMusicButton.SongProperties[4];
+            string currentCleared = MusicManager.GetSong(toSaveCleared);
+            if (currentCleared == null || currentCleared.Equals(""))
+            {
+                currentCleared = "0";
+            }
 
-        MusicManager.addSong(toSaveCleared, (int.Parse(currentCleared) +1).ToString());
-        MusicManager.addSong(toSaveScore, GetScore().ToString());
+            MusicManager.addSong(toSaveCleared, (int.Parse(currentCleared) + 1).ToString());
+            MusicManager.addSong(toSaveScore, GetScore().ToString());
+        }
     }
 
     public void SaveAttempts()
     {
-        string toSaveAttempts = LoadMusicButton.Index.ToString() + LoadMusicButton.SongProperties[3];
-        string currentAttempts = MusicManager.GetSong(toSaveAttempts);
+        if (SaveStats)
+        {
+            string toSaveAttempts = LoadMusicButton.Index.ToString() + LoadMusicButton.SongProperties[3];
+            string currentAttempts = MusicManager.GetSong(toSaveAttempts);
 
-        MusicManager.addSong(toSaveAttempts, (int.Parse(currentAttempts) +1).ToString());
+            MusicManager.addSong(toSaveAttempts, (int.Parse(currentAttempts) + 1).ToString());
+        }
     }
 
     public void HideOnFilure()
