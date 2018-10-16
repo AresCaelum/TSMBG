@@ -69,7 +69,7 @@ public class LoadMusicButton : MonoBehaviour
 
     void UpdateSongLength()
     {
-        MusicManager.addSong(Index.ToString() + SongProperties[1], AudioHolder.instance.GetAudioClip().length.ToString());
+        MusicManager.addSong(Index.ToString() + SongProperties[1], AudioManager.GetClip().length.ToString());
         ShowDiscription(Index);
     }
 
@@ -114,7 +114,7 @@ public class LoadMusicButton : MonoBehaviour
         {
             Index = index;
             Debug.Log(MusicManager.GetSong((index).ToString() + SongProperties[0]) + " - " + index);
-            AudioHolder.instance.LoadAudio(MusicManager.GetSong((index).ToString() + SongProperties[0]));
+            AudioManager.LoadClip(MusicManager.GetSong((index).ToString() + SongProperties[0]));
             LoadMusic.Invoke();
         }
     }

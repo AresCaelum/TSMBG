@@ -149,7 +149,7 @@ public class ObjectSpawner : MonoBehaviour
     IEnumerator Start()
     {
         //Random.InitState(AudioHolder.instance.GetSongName());
-        proceduralOffset = (Mathf.Abs(AudioHolder.instance.GetSongName()) % 2048) * proceduralScale; 
+        proceduralOffset = (Mathf.Abs(AudioManager.SongName.GetHashCode()) % 2048) * proceduralScale; 
         Debug.Log("Seed: " + proceduralOffset);
 
         StartCoroutine(HandleBPSData());
@@ -168,7 +168,7 @@ public class ObjectSpawner : MonoBehaviour
         _fSample = AudioSettings.outputSampleRate;
 
 
-        Player.clip = AudioHolder.instance.GetAudioClip();
+        Player.clip = AudioManager.GetClip();
         Player.Play();
         AudioVisualizerManager.audioSource = Player;
         SpawnTile(transform.position);

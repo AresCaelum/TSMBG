@@ -14,30 +14,9 @@ public class PlayGame : MonoBehaviour {
         myButton = GetComponent<Button>();
     }
 
-
-    private void Start()
+    private void Update()
     {
-        myButton.interactable = false;
-        SelectFile.UsedFile += DisablePlayButton;
-        AudioHolder.SongFinishedLoading += EnablePlayButton;
-        LoadMusicButton.LoadMusic += DisablePlayButton;
-    }
-
-    private void OnDestroy()
-    {
-        SelectFile.UsedFile -= DisablePlayButton;
-        AudioHolder.SongFinishedLoading -= EnablePlayButton;
-        LoadMusicButton.LoadMusic -= DisablePlayButton;
-    }
-
-    void DisablePlayButton()
-    {
-        myButton.interactable = false;
-    }
-
-    void EnablePlayButton()
-    {
-        myButton.interactable = true;
+        myButton.interactable = AudioManager.GetClip() != null;
     }
 
     public void StartGame()

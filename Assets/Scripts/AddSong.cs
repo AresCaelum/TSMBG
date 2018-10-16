@@ -39,9 +39,9 @@ public class AddSong : MonoBehaviour {
 
         string length = MusicManager.NumberofSongs().ToString() + LoadMusicButton.SongProperties[1];
         string songLength = (0).ToString();
-        if (AudioHolder.instance.GetAudioClip() != null)
+        if (AudioManager.GetClip() != null)
         {
-            songLength = AudioHolder.instance.GetAudioClip().length.ToString();
+            songLength = AudioManager.GetClip().length.ToString();
         }
 
         string score = MusicManager.NumberofSongs().ToString() + LoadMusicButton.SongProperties[2];

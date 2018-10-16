@@ -10,27 +10,24 @@ public class MenuMusic : MonoBehaviour {
     }
     // Use this for initialization
     IEnumerator Start () {
-        AudioHolder.SongFinishedLoading += ChangeClipAndPlay;
         yield return new WaitForSeconds(1f);
-        AudioHolder.instance.LoadAudio(PlayerPrefs.GetString(AudioHolder.lastPlayed, ""));
+        AudioManager.LoadClip(PlayerPrefs.GetString(AudioHolder.lastPlayed, ""));
 	}
-
-    private void OnDestroy()
-    {
-        AudioHolder.SongFinishedLoading -= ChangeClipAndPlay;
-    }
 
     void ChangeClipAndPlay()
     {
         if (mySource.isPlaying)
             mySource.Stop();
 
-        mySource.clip = AudioHolder.instance.GetAudioClip();
+        mySource.clip = AudioManager.GetClip();
         mySource.Play();
     }
 
     // Update is called once per frame
     void Update () {
-		
+		if(AudioManager.GetClip() != mySource.clip)
+        {
+            ChangeClipAndPlay();
+        }
 	}
 }

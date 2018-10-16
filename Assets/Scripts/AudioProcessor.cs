@@ -100,7 +100,7 @@ public class AudioProcessor : MonoBehaviour
         initArrays();
 
         //audioSource = GetComponent<AudioSource>();
-        samplingRate = AudioHolder.instance.GetAudioClip().frequency;
+        samplingRate = AudioManager.GetClip().frequency;
 
         framePeriod = (float)bufferSize / (float)samplingRate;
 

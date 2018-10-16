@@ -53,6 +53,7 @@ public class AudioHolder : MonoBehaviour
         {
             return;
         }
+        
         if (loadRoutine != null)
             StopCoroutine(loadRoutine);
 
@@ -111,7 +112,7 @@ public class AudioHolder : MonoBehaviour
 
     void HandleLoad()
     {
-        LoadAudio(SelectFile.newPath);
+        AudioManager.LoadClip(SelectFile.newPath);
     }
 
     private void OnDestroy()

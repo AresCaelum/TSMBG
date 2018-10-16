@@ -15,6 +15,6 @@ public class ProgressionScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-       ProgressionBar.fillAmount = Audio.time /AudioHolder.instance.GetAudioClip().length;
+       ProgressionBar.fillAmount = Audio.time /AudioManager.GetClip().length;
     }
 }
