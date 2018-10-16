@@ -58,7 +58,7 @@ public class AudioHolder : MonoBehaviour
 
         WWW clipAddress = new WWW(location);
         songName = Path.GetFileNameWithoutExtension(location);
-        currentClip = clipAddress.GetAudioClip(false, false);
+        currentClip = clipAddress.GetAudioClip(false, true);
         if (currentClip != null)
         {
             // audioLocation = location;
