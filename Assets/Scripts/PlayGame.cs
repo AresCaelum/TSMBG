@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-public class PlayGame : MonoBehaviour {
+public class PlayGame : MonoBehaviour
+{
 
     Button myButton;
     public Slider difficultySlide;
