@@ -82,18 +82,21 @@ public class DirectoryWindow : MonoBehaviour
 
     public void Accept_Button()
     {
+        AudioManager.ClearClip();
         LoadSongsInPath(MusicFolderPath, SongButton, MusicContent);
         gameObject.SetActive(false);
     }
 
     public static void LoadSongsInPath(string path, GameObject objToSpawn, Transform parentOfObjToSpawn)
     {
+        string LastPlayed = PlayerPrefs.GetString("LastPlayedSong", "").Replace("file:///", "");
+        Debug.Log(LastPlayed);
         List<Transform> buttonsToClear = new List<Transform>();
-        foreach(Transform child in parentOfObjToSpawn)
+        foreach (Transform child in parentOfObjToSpawn)
         {
             buttonsToClear.Add(child);
         }
-        for(int i = buttonsToClear.Count-1; i >= 0; i--)
+        for (int i = buttonsToClear.Count - 1; i >= 0; i--)
         {
             Destroy(buttonsToClear[i].gameObject);
         }
@@ -107,12 +110,21 @@ public class DirectoryWindow : MonoBehaviour
         FileInfo[] MP3 = dir.GetFiles("*.mp3");
         FileInfo[] WAV = dir.GetFiles("*.wav");
         FileInfo[] OGG = dir.GetFiles("*.ogg");
-
+        bool firstLoaded = true;
         foreach (FileInfo song in MP3)
         {
             MusicPaths.Add(song.FullName);
             SongButton button = Instantiate(objToSpawn, parentOfObjToSpawn).GetComponent<SongButton>();
             button.SetSettings(song.FullName);
+            if (song.FullName == LastPlayed)
+            {
+                button.PreviouslyLoaded = true;
+            }
+            if (firstLoaded && button.PreviouslyLoaded == false)
+            {
+                firstLoaded = false;
+                button.FirstToLoad = true;
+            }
         }
 
         foreach (FileInfo song in WAV)
@@ -120,6 +132,10 @@ public class DirectoryWindow : MonoBehaviour
             MusicPaths.Add(song.FullName);
             SongButton button = Instantiate(objToSpawn, parentOfObjToSpawn).GetComponent<SongButton>();
             button.SetSettings(song.FullName);
+            if (song.FullName == LastPlayed)
+            {
+                button.PreviouslyLoaded = true;
+            }
         }
 
         foreach (FileInfo song in OGG)
@@ -127,6 +143,10 @@ public class DirectoryWindow : MonoBehaviour
             MusicPaths.Add(song.FullName);
             SongButton button = Instantiate(objToSpawn, parentOfObjToSpawn).GetComponent<SongButton>();
             button.SetSettings(song.FullName);
+            if (song.FullName == LastPlayed)
+            {
+                button.PreviouslyLoaded = true;
+            }
         }
     }
 }

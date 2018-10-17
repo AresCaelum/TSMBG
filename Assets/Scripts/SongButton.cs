@@ -17,6 +17,19 @@ public class SongButton : MonoBehaviour
 
     public static Image SelectedButton = null;
 
+    public bool PreviouslyLoaded = false;
+    public bool FirstToLoad = false;
+
+    public void Update()
+    {
+        if((PreviouslyLoaded || FirstToLoad) && AudioManager.GetClip() != null)
+        {
+            FirstToLoad = false;
+            PreviouslyLoaded = false;
+            ShowDescription();
+        }
+    }
+
     public void SetSettings(string path)
     {
         SongPath = path;
@@ -27,6 +40,7 @@ public class SongButton : MonoBehaviour
 
     public void LoadAudio()
     {
+
     }
 
     public void ShowDescription()

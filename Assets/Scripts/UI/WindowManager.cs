@@ -64,6 +64,7 @@ public class WindowManager: MonoBehaviour
     public void CreateFailureWindow()
     {
         Failure = true;
+        SaveAttempts();
         ObjectSpawner audioPlayer = GameObject.Find("RythmnSpawner").GetComponent<ObjectSpawner>();
         audioPlayer.Fail();
         //audioPlayer.Stop();

@@ -24,6 +24,7 @@ public class PlayGame : MonoBehaviour
     {
         if (AudioHolder.CanPlay())
         {
+            PlayerPrefs.SetString("LastPlayedSong", AudioManager.Url);
             AudioHolder.UseLife();
             WindowManager.SaveStats = true;
             ObjectSpawner.ProjectileSpawnRate = 3 - Mathf.RoundToInt(difficultySlide.value);

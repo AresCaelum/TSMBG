@@ -1092,7 +1092,7 @@ MonoBehaviour:
   m_Content: {fileID: 224974055013873814}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
@@ -1514,7 +1514,6 @@ MonoBehaviour:
   SongToSpawn: {fileID: 1748128036435670, guid: 786e4ea951cd73a43a13ff98631b0559,
     type: 2}
   MusicContents: {fileID: 224974055013873814}
-  Instance: {fileID: 0}
   Labels:
   - {fileID: 0}
   - {fileID: 0}
@@ -2152,7 +2151,7 @@ MonoBehaviour:
   m_Content: {fileID: 224093308460865526}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135

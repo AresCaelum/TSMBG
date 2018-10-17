@@ -24,7 +24,10 @@ public class Projectile : MonoBehaviour
         {
             player.gameObject.AddComponent<Stun>();
             player.TakeOneHealth();
-            Destroy(this.gameObject);
+            GetComponent<CircleCollider2D>().enabled = false;
+            GetComponent<SpriteRenderer>().enabled = false;
+            Destroy(this.gameObject, 3f);
+            myBody.velocity = Vector2.zero;
         }
     }
 }
