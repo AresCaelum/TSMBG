@@ -64,6 +64,7 @@ public class WindowManager: MonoBehaviour
     public void CreateFailureWindow()
     {
         Failure = true;
+        SaveAttempts();
         ObjectSpawner audioPlayer = GameObject.Find("RythmnSpawner").GetComponent<ObjectSpawner>();
         audioPlayer.Fail();
         //audioPlayer.Stop();
@@ -76,16 +77,11 @@ public class WindowManager: MonoBehaviour
     {
         if (SaveStats)
         {
-            string toSaveScore = LoadMusicButton.Index.ToString() + LoadMusicButton.SongProperties[2];
-            string toSaveCleared = LoadMusicButton.Index.ToString() + LoadMusicButton.SongProperties[4];
-            string currentCleared = MusicManager.GetSong(toSaveCleared);
-            if (currentCleared == null || currentCleared.Equals(""))
-            {
-                currentCleared = "0";
-            }
+            int toSaveScore = PlayerPrefs.GetInt(AudioManager.SongName + SongSavedProperties.Score.ToString(), 0);
+            int toSaveCleared =  PlayerPrefs.GetInt(AudioManager.SongName + SongSavedProperties.Cleared.ToString(), 0);
 
-            MusicManager.addSong(toSaveCleared, (int.Parse(currentCleared) + 1).ToString());
-            MusicManager.addSong(toSaveScore, GetScore().ToString());
+            PlayerPrefs.SetInt(AudioManager.SongName + SongSavedProperties.Score.ToString(), toSaveScore);
+            PlayerPrefs.SetInt(AudioManager.SongName + SongSavedProperties.Cleared.ToString(), toSaveCleared + 1);
         }
     }
 
@@ -93,10 +89,8 @@ public class WindowManager: MonoBehaviour
     {
         if (SaveStats)
         {
-            string toSaveAttempts = LoadMusicButton.Index.ToString() + LoadMusicButton.SongProperties[3];
-            string currentAttempts = MusicManager.GetSong(toSaveAttempts);
-
-            MusicManager.addSong(toSaveAttempts, (int.Parse(currentAttempts) + 1).ToString());
+            int toSaveAttempts = PlayerPrefs.GetInt(AudioManager.SongName + SongSavedProperties.Failed.ToString(), 0);
+            PlayerPrefs.SetInt(AudioManager.SongName + SongSavedProperties.Failed.ToString(), toSaveAttempts + 1);
         }
     }
 

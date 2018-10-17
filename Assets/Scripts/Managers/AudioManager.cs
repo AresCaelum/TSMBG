@@ -6,7 +6,7 @@ using System.IO;
 public class AudioManager{
 
     private static AudioClip loadedClip;
-    private static string url = "LastPlayed";
+    private static string url = "";
     private static string songName = "";
 
     public static string Url
@@ -35,9 +35,16 @@ public class AudioManager{
         }
     }
 
+    public static void ClearClip()
+    {
+        loadedClip = null;
+        url = "";
+        songName = "";
+    }
+
     public static AudioClip LoadClip(string path)
     {
-        if (path.Equals(""))
+        if (path.Equals("") || path == Url)
         {
             return loadedClip;
         }

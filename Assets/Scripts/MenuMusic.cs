@@ -2,17 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
-public class MenuMusic : MonoBehaviour {
+public class MenuMusic : MonoBehaviour
+{
     private AudioSource mySource;
     private void Awake()
     {
         mySource = GetComponent<AudioSource>();
     }
     // Use this for initialization
-    IEnumerator Start () {
+    IEnumerator Start()
+    {
         yield return new WaitForSeconds(1f);
-        AudioManager.LoadClip(PlayerPrefs.GetString(AudioHolder.lastPlayed, ""));
-	}
+        if(AudioManager.Url.Equals(""))
+            AudioManager.LoadClip(PlayerPrefs.GetString("LastPlayedSong", ""));
+    }
+
+    private void OnDestroy()
+    {
+        PlayerPrefs.SetString("LastPlayedSong", AudioManager.Url);
+    }
 
     void ChangeClipAndPlay()
     {
@@ -24,10 +32,11 @@ public class MenuMusic : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
-		if(AudioManager.GetClip() != mySource.clip)
+    void Update()
+    {
+        if (AudioManager.GetClip() != mySource.clip)
         {
             ChangeClipAndPlay();
         }
-	}
+    }
 }

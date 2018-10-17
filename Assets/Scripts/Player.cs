@@ -173,7 +173,6 @@ public class Player : MonoBehaviour
     {
         AudioSource audioPlayer = GameObject.Find("RythmnSpawner").GetComponent<AudioSource>();
         audioPlayer.Stop();
-        WindowManager.Instance.SaveAttempts();
         WindowManager.Instance.CreateFailureWindow();
         Destroy(this);
     }

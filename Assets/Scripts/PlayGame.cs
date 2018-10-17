@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-public class PlayGame : MonoBehaviour {
+public class PlayGame : MonoBehaviour
+{
 
     Button myButton;
     public Slider difficultySlide;
@@ -23,6 +24,7 @@ public class PlayGame : MonoBehaviour {
     {
         if (AudioHolder.CanPlay())
         {
+            PlayerPrefs.SetString("LastPlayedSong", AudioManager.Url);
             AudioHolder.UseLife();
             WindowManager.SaveStats = true;
             ObjectSpawner.ProjectileSpawnRate = 3 - Mathf.RoundToInt(difficultySlide.value);
