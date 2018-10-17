@@ -119,6 +119,7 @@ public class DirectoryWindow : MonoBehaviour
             if (song.FullName == LastPlayed)
             {
                 button.PreviouslyLoaded = true;
+                button.FirstToLoad = false;
             }
             if (firstLoaded && button.PreviouslyLoaded == false)
             {

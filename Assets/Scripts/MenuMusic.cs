@@ -13,7 +13,8 @@ public class MenuMusic : MonoBehaviour
     IEnumerator Start()
     {
         yield return new WaitForSeconds(1f);
-        AudioManager.LoadClip(PlayerPrefs.GetString("LastPlayedSong", ""));
+        if(AudioManager.Url.Equals(""))
+            AudioManager.LoadClip(PlayerPrefs.GetString("LastPlayedSong", ""));
     }
 
     private void OnDestroy()
